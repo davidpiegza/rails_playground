@@ -1,5 +1,5 @@
 When /^I visit the content page "([^"]*)"$/ do |page|
-  visit("/pages/#{page}")
+  visit("#{page}")
 end
 
 Then /^I should see a title "([^"]*)"$/ do |title|

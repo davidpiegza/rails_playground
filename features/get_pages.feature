@@ -9,7 +9,8 @@ Scenario Outline: Visitor requests a content page
   Then I should see a title <title>
 
 Scenarios:
-  | page      | title     |
-  | "home"    | "Home"    |
-  | "contact" | "Contact" |
-  | "about"   | "About"   |
+  | page       | title     |
+  | "/"        | "Home"    |
+  | "/contact" | "Contact" |
+  | "/about"   | "About"   |
+  | "/help"    | "Help"    |

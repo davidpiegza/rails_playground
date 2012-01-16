@@ -1,11 +1,16 @@
 require 'spec_helper'
 
 describe User do
+  before(:each) do
+    @attributes = { 
+      name: "Example User",
+      email: "user@example.com",
+      password: "foobar",
+      password_confirmation: "foobar"
+    }
+  end
+
   describe "validates attributes" do
-    before(:each) do
-      @attributes = { name: "Example User", email: "user@example.com" }
-    end
-  
     it "creates a new user instance given valid attributes" do
       User.create!(@attributes)
     end
@@ -53,6 +58,48 @@ describe User do
       User.create! @attributes.merge(email: upcased_email)
       user_with_duplicate_email = User.new @attributes
       user_with_duplicate_email.should_not be_valid
+    end
+  end
+  
+  describe "password validations" do
+    it "requires a password" do
+      user_without_password = User.new @attributes.merge(password: "", password_confirmation: "")
+      user_without_password.should_not be_valid
+    end
+    
+    it "requires a matching password confirmation" do
+      user_with_invalid_password_confirmation = User.new @attributes.merge(password_confirmation: "invalid")
+      user_with_invalid_password_confirmation.should_not be_valid
+    end
+    
+    it "rejects short passwords" do
+      short_password = "a" * 5
+      User.new( @attributes.merge(password: short_password, password_confirmation: short_password) ).should_not be_valid
+    end
+    
+    it "rejects long passwords" do
+      long_password = "a" * 41
+      User.new( @attributes.merge(password: long_password, password_confirmation: long_password) ).should_not be_valid
+    end
+  end
+  
+  describe "#authenticate" do
+    before(:each) do
+      @user = User.create! @attributes
+    end
+
+    it "returns nil on email/password mismatch" do
+      wrong_password_user = User.authenticate @attributes[:email], "wrongpass"
+    end
+      
+    it "returns nil for an email address with no user" do
+      no_user = User.authenticate "bar@foo.com", @attributes[:password]
+      no_user.should be_nil
+    end
+      
+    it "returns the user on email/password match" do
+      matching_user = User.authenticate @attributes[:email], @attributes[:password]
+      matching_user.should == @user
     end
   end
 end

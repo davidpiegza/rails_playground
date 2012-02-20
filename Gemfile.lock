@@ -57,7 +57,6 @@ GEM
       capybara (>= 1.1.2)
       cucumber (>= 1.1.8)
       nokogiri (>= 1.5.0)
-    database_cleaner (0.7.1)
     diff-lcs (1.1.3)
     erubis (2.7.0)
     execjs (1.3.0)
@@ -85,6 +84,7 @@ GEM
     mime-types (1.17.2)
     multi_json (1.1.0)
     nokogiri (1.5.0)
+    pg (0.12.2)
     polyglot (0.3.3)
     rack (1.4.1)
     rack-cache (1.1)
@@ -150,10 +150,6 @@ GEM
     uglifier (1.2.3)
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)
-    webrat (0.7.3)
-      nokogiri (>= 1.2.0)
-      rack (>= 1.0)
-      rack-test (>= 0.5.3)
     xpath (0.1.4)
       nokogiri (~> 1.3)
 
@@ -165,12 +161,11 @@ DEPENDENCIES
   capybara (= 1.1.2)
   coffee-rails
   cucumber-rails
-  database_cleaner
   factory_girl_rails
   jquery-rails
+  pg (= 0.12.2)
   rails (= 3.2.1)
   rspec-rails
   sass-rails
-  sqlite3
+  sqlite3 (= 1.3.5)
   uglifier
-  webrat

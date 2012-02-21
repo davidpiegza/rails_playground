@@ -7,6 +7,7 @@ gem 'rails', '3.2.1'
 
 gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'jquery-rails'
+gem 'launchy'
 
 group :development, :test do
   gem 'sqlite3', '1.3.5'

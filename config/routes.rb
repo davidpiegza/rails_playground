@@ -3,7 +3,11 @@ RailsPlayground::Application.routes.draw do
   match 'about', to: 'pages#about'
   match 'help', to: 'pages#help'
 
-  resources :users
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
   match 'signup', to: 'users#new'
 
   resources :sessions, only: [:new, :create, :destroy]
@@ -11,6 +15,7 @@ RailsPlayground::Application.routes.draw do
   match 'signout', to: 'sessions#destroy', via: :delete
 
   resources :microposts, only: [:create, :destroy]
+  resources :relationships, only: [:create, :destroy]
 
   root to: 'pages#home'
 

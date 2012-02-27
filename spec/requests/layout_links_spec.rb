@@ -19,6 +19,22 @@ describe "LayoutLinks" do
           page.should have_selector("tr##{item.id}", text: item.content)
         end
       end
+
+      describe "follower/following counts" do
+        let(:other_user) { FactoryGirl.create(:user) }
+        before do 
+          user.follow!(other_user) 
+          visit root_path
+        end
+
+        it 'should display following count' do
+          page.should have_selector('a', href: following_user_path(user), content: "0 following")
+        end
+
+        it 'should display followe count' do
+          page.should have_selector('a', href: followers_user_path(user), content: "1 follower")
+        end
+      end
     end
   end
 

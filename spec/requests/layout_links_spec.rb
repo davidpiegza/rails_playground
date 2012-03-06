@@ -16,14 +16,14 @@ describe "LayoutLinks" do
 
       it "should render the user's feed" do
         user.feed.each do |item|
-          page.should have_selector("tr##{item.id}", text: item.content)
+          page.should have_selector("div##{item.id}", text: item.content)
         end
       end
 
       describe "follower/following counts" do
         let(:other_user) { FactoryGirl.create(:user) }
-        before do 
-          user.follow!(other_user) 
+        before do
+          user.follow!(other_user)
           visit root_path
         end
 

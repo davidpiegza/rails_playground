@@ -1,19 +1,18 @@
 <% provide :title, 'Home' %>
 
 <% if signed_in? %>
-  <table class="front">
-    <tr>
-      <td class="main">
-        <h1 class="micropost">What's up?</h1>
-        <%= render 'shared/micropost_form' %>
-        <%= render 'shared/feed' %>
-      </td>
-      <td class="sidebar round">
-        <%= render 'shared/user_info' %>
-        <%= render 'shared/stats' %>
-      </td>
-    </tr>
-  </table>
+  <h1>What's up?</h1>
+
+  <%= render 'shared/micropost_form' %>
+  <%= render 'shared/feed' %>
+
+
+  <td class="sidebar round">
+    <%= render 'shared/user_info' %>
+    <%= render 'shared/stats' %>
+  </td>
+
+
 <% else %>
   <h1>Sample App</h1>
   <p>

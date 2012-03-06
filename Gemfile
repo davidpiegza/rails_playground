@@ -11,6 +11,10 @@ gem 'launchy'
 gem 'faker'
 gem 'will_paginate'
 
+group :development do
+  gem 'guard-rspec'
+end
+
 group :development, :test do
   gem 'sqlite3', '1.3.5'
   gem 'rspec-rails'
@@ -28,6 +32,9 @@ group :test do
   gem 'cucumber-rails'
   gem 'capybara', '1.1.2'
   gem 'factory_girl_rails'
+  gem 'rb-fsevent', '0.4.3.1', :require => false
+  gem 'guard-spork', '0.3.2'
+  gem 'spork', '0.9.0'
 end
 
 group :production do

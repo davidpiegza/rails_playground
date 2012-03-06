@@ -9,7 +9,7 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'jquery-rails'
 gem 'launchy'
 gem 'faker'
-gem 'will_paginate'
+gem 'kaminari'
 
 group :development do
   gem 'guard-rspec'

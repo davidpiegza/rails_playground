@@ -1,159 +1,138 @@
 require 'spec_helper'
 
 describe User do
-  let(:user) { FactoryGirl.create(:user) }
-  before do
-    @attributes = {
-      name: "Example User",
-      email: "user@example.com",
-      password: "foobar",
-      password_confirmation: "foobar"
-    }
-  end
+  before { @user = User.new name: "Example User", email: "user@example.com", password: "foobar", password_confirmation: "foobar" }
 
-  subject { user }
+  subject { @user }
 
-  describe "validates attributes" do
-    it "creates a new user instance given valid attributes" do
-      User.create!(@attributes)
-    end
-
-    it "requires a name" do
-      no_name_user = User.new(@attributes.merge(name: ""))
-      no_name_user.should_not be_valid
-    end
-
-    it "requires an email address" do
-      no_email_user = User.new(@attributes.merge(email: ""))
-      no_email_user.should_not be_valid
-    end
-
-    it "rejects names that are too long" do
-      long_name = "a" * 51
-      long_name_user = User.new @attributes.merge(name: long_name)
-      long_name_user.should_not be_valid
-    end
-
-    it "accepts valid email addresses" do
-      addresses = %w[user@foo.com THE_USER@foo.bar.org first.last@foo.jp]
-      addresses.each do |address|
-        valid_email_address = User.new @attributes.merge(email: address)
-        valid_email_address.should be_valid
-      end
-    end
-
-    it "rejects invalid email addresses" do
-      addresses = %w[user@foo,com user_at_foo.org example.user@foo.]
-      addresses.each do |address|
-        invalid_email_address = User.new @attributes.merge(email: address)
-        invalid_email_address.should_not be_valid
-      end
-    end
-
-    it "rejects duplicate email addresses" do
-      User.create! @attributes
-      user_with_duplicate_email = User.new @attributes
-      user_with_duplicate_email.should_not be_valid
-    end
-
-    it "rejects duplicate email addresses identical up to case" do
-      upcased_email = @attributes[:email].upcase
-      User.create! @attributes.merge(email: upcased_email)
-      user_with_duplicate_email = User.new @attributes
-      user_with_duplicate_email.should_not be_valid
-    end
-  end
-
-  describe "password validations" do
-    it "requires a password" do
-      user_without_password = User.new @attributes.merge(password: "", password_confirmation: "")
-      user_without_password.should_not be_valid
-    end
-
-    it "requires a matching password confirmation" do
-      user_with_invalid_password_confirmation = User.new @attributes.merge(password_confirmation: "invalid")
-      user_with_invalid_password_confirmation.should_not be_valid
-    end
-
-    it "rejects short passwords" do
-      short_password = "a" * 5
-      User.new( @attributes.merge(password: short_password, password_confirmation: short_password) ).should_not be_valid
-    end
-
-    it "rejects long passwords" do
-      long_password = "a" * 41
-      User.new( @attributes.merge(password: long_password, password_confirmation: long_password) ).should_not be_valid
-    end
-  end
-
-  describe "#authenticate" do
-    before(:each) do
-      @user = User.create! @attributes
-    end
-
-    it "returns nil on email/password mismatch" do
-      wrong_password_user = User.authenticate @attributes[:email], "wrongpass"
-    end
-
-    it "returns nil for an email address with no user" do
-      no_user = User.authenticate "bar@foo.com", @attributes[:password]
-      no_user.should be_nil
-    end
-
-    it "returns the user on email/password match" do
-      matching_user = User.authenticate @attributes[:email], @attributes[:password]
-      matching_user.should == @user
-    end
-  end
-
+  it { should respond_to(:name) }
+  it { should respond_to(:email) }
+  it { should respond_to(:password_digest) }
+  it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:remember_token) }
+  it { should respond_to(:admin) }
   it { should respond_to(:authenticate) }
   it { should respond_to(:microposts) }
   it { should respond_to(:feed) }
   it { should respond_to(:relationships) }
+  it { should respond_to(:followed_users) }  
   it { should respond_to(:reverse_relationships) }
-  it { should respond_to(:followed_users) }
   it { should respond_to(:followers) }
   it { should respond_to(:following?) }
   it { should respond_to(:follow!) }
-  it { should respond_to(:admin) }
+  it { should respond_to(:unfollow!) }
 
   it { should be_valid }
   it { should_not be_admin }
 
-  describe "remember token" do
+  describe "when name is not present" do
+    before { @user.name = " " }
+    it { should_not be_valid }    
+  end
+
+  describe "when email is not present" do
+    before { @user.email = " " }
+    it { should_not be_valid }    
+  end
+
+  describe "when name is too long" do
+    before { @user.name = "a" * 51 }
+    it { should_not be_valid }    
+  end
+
+  describe "when email format is invalid" do
+    invalid_addresses =  %w[user@foo,com user_at_foo.org example.user@foo.]
+    invalid_addresses.each do |invalid_address|
+      before { @user.email = invalid_address }
+      it { should_not be_valid }
+    end
+  end
+
+  describe "when email format is valid" do
+    valid_addresses = %w[user@foo.com A_USER@f.b.org frst.lst@foo.jp a+b@baz.cn]
+    valid_addresses.each do |valid_address|
+      before { @user.email = valid_address }
+      it { should be_valid }
+    end
+  end  
+
+  describe "when email address is already taken" do
     before do
-      @user = User.new name: 'Example User', email: 'user@example.com', password: 'foobar', password_confirmation: 'foobar'
+      user_with_same_email = @user.dup
+      user_with_same_email.save
     end
 
-    subject { @user }
+    it { should_not be_valid }
+  end
 
+  describe "when email address is already taken" do
+    before do
+      user_with_same_email = @user.dup
+      user_with_same_email.email = @user.email.upcase
+      user_with_same_email.save
+    end
+
+    it { should_not be_valid }
+  end
+
+  describe "when password is not present" do
+    before { @user.password = @user.password_confirmation = " " }
+    it { should_not be_valid }
+  end
+
+  describe "when password doesn't match confirmation" do
+    before { @user.password_confirmation = "mismatch" }
+    it { should_not be_valid }
+  end
+
+  describe "with a password that's too short" do
+    before { @user.password = @user.password_confirmation = "a" * 5 }
+    it { should be_invalid }
+  end
+
+  describe "return value of authenticate method" do
+    before { @user.save }
+    let(:found_user) { User.find_by_email(@user.email) }
+
+    describe "with valid password" do
+      it { should == found_user.authenticate(@user.password) }
+    end
+
+    describe "with invalid password" do
+      let(:user_for_invalid_password) { found_user.authenticate("invalid") }
+
+      it { should_not == user_for_invalid_password }
+      specify { user_for_invalid_password.should be_false }
+    end
+  end
+
+  describe "remember token" do
     before { @user.save }
     its(:remember_token) { should_not be_blank }
   end
 
   describe "with admin attribute set to true" do
-    before { user.toggle!(:admin) }
+    before { @user.toggle!(:admin) }
     it { should be_admin }
   end
 
   describe "micropost associations" do
-    before { user.save }
+    before { @user.save }
     let!(:older_micropost) do
-      FactoryGirl.create :micropost, user: user, created_at: 1.day.ago
+      FactoryGirl.create :micropost, user: @user, created_at: 1.day.ago
     end
     let!(:newer_micropost) do
-      FactoryGirl.create :micropost, user: user, created_at: 1.hour.ago
+      FactoryGirl.create :micropost, user: @user, created_at: 1.hour.ago
     end
 
     it "should have the right microposts in the right order" do
-      user.microposts.should == [newer_micropost, older_micropost]
+      @user.microposts.should == [newer_micropost, older_micropost]
     end
 
     it "should destroy associated microposts" do
-      microposts = user.microposts
-      user.destroy
+      microposts = @user.microposts
+      @user.destroy
       microposts.each do |micropost|
         Micropost.find_by_id(micropost.id).should be_nil
       end
@@ -166,7 +145,7 @@ describe User do
       let(:followed_user) { FactoryGirl.create(:user) }
 
       before do
-        user.follow!(followed_user)
+        @user.follow!(followed_user)
         3.times { followed_user.microposts.create!(content: "Lorem ipsum") }
       end
 
@@ -184,8 +163,8 @@ describe User do
   describe "following" do
     let(:other_user) { FactoryGirl.create(:user) }
     before do
-      user.save
-      user.follow!(other_user)
+      @user.save
+      @user.follow!(other_user)
     end
 
     it { should be_following(other_user) }
@@ -193,14 +172,15 @@ describe User do
 
     describe "followed user" do
       subject { other_user }
-      its(:followers) { should include(user) }
+      its(:followers) { should include(@user) }
     end
 
     describe "and unfollowing" do
-      before { user.unfollow!(other_user) }
+      before { @user.unfollow!(other_user) }
 
       it { should_not be_following(other_user) }
       its(:followed_users) { should_not include(other_user) }
     end
   end
+
 end

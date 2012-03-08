@@ -11,6 +11,7 @@ gem 'launchy'
 gem 'heroku'
 gem 'faker'
 gem 'kaminari'
+gem 'thin'
 
 group :development do
   gem 'guard-rspec'

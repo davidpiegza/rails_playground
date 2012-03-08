@@ -8,6 +8,7 @@ gem 'rails', '3.2.2'
 gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'jquery-rails'
 gem 'launchy'
+gem 'heroku'
 gem 'faker'
 gem 'kaminari'
 

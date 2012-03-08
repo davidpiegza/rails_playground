@@ -27,4 +27,6 @@ RailsPlayground::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  ENV['EMAIL_ADDRESS'] = 'test@example.com'
 end

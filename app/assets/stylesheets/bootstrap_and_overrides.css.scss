@@ -51,20 +51,51 @@ a.button {
   vertical-align: top;
 }
 
-.micropost {
+.feed-item .micropost {
   margin-left: 10px;
 }
 
-.feed-item {
+.feed-item, .micropost-item {
   margin-bottom: 30px;
 }
 
-.feed-item .content {
+.micropost .content {
   margin-bottom: 10px;
 }
 
-.feed-item .timestamp {
+.micropost .timestamp {
   font-size: 0.9em;
   color: gray;
   font-style: italic;
 }
+
+
+
+img.gravatar {
+  vertical-align: top;
+}
+
+
+.sidebar {
+  margin-left: 100px;
+}
+
+
+/* Footer */
+footer {
+  margin-top: 45px;
+  padding: 20px 20px 40px 20px;
+  border-top: 1px solid #e5e5e5;
+}
+
+footer ul {
+  margin: 0;
+  padding: 0;
+}
+
+footer ul li {
+  display: block;
+  float: left;
+  padding-right: 20px;
+}
+

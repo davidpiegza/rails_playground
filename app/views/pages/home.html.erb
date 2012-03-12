@@ -12,15 +12,15 @@
     <%= render 'shared/stats' %>
   </td>
 
-
 <% else %>
-  <h1>Sample App</h1>
-  <p>
-    This is the home page for the
-    <a href="http://railstutorial.org/">Ruby on Rails Tutorial</a>
-    sample application.
-  </p>
-
-  <%= link_to "Sign up now!", signup_path, :class => "signup_button round" %>
+  <div class="hero-unit">
+    <h1>Sample App</h1>
+    <p style="margin: 20px 0;">
+      This is the home page for the
+      <a href="http://railstutorial.org/">Ruby on Rails Tutorial</a>
+      sample application.
+    </p>
+    <p><%= link_to "Sign up now!", signup_path, :class => "btn btn-primary btn-large" %> </p>
+  </div>
 
 <% end %>

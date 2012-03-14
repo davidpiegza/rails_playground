@@ -1,30 +1,42 @@
 <% provide :title, 'Edit user' %>
-<h1>Edit user</h1>
 
-<%= form_for @user do |f| %>
-  <%= render 'shared/error_messages', object: f.object %>
-  <div class="field">
-     <%= f.label :name %><br />
-     <%= f.text_field :name %>
-   </div>
-   <div class="field">
-     <%= f.label :email %><br />
-     <%= f.text_field :email %>
-   </div>
-   <div class="field">
-     <%= f.label :password %><br />
-     <%= f.password_field :password %>
-   </div>
-   <div class="field">
-     <%= f.label :password_confirmation, "Confirmation" %><br />
-     <%= f.password_field :password_confirmation %>
-   </div>
-   <div class="actions">
-     <%= f.submit "Update" %>
-   </div>
-<% end %>
-
-<div>
-  <%= gravatar_for @user %>
-  <%= link_to 'change', 'http://gravatar.com/emails' %>
+<div class="page-header">
+  <h1>Edit user</h1>
 </div>
+
+<%= form_for @user, html: { class: 'form-horizontal'} do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="control-group">
+    <%= f.label :name, class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :email, class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :email %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :password, class: 'control-label' %>
+    <div class="controls">
+      <%= f.password_field :password %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :password_confirmation, "Confirmation", class: 'control-label' %>
+    <div class="controls">
+      <%= f.password_field :password_confirmation %>
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="controls">
+      <%= gravatar_for @user %>
+      <%= link_to 'change', 'http://gravatar.com/emails' %>
+    </div>
+  </div>
+  <div class="form-actions">
+    <%= f.submit "Update", class: 'btn btn-primary' %>
+  </div>
+<% end %>

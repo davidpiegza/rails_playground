@@ -1,17 +1,10 @@
-// Set the correct sprite paths
-$iconSpritePath: image-path('glyphicons-halflings.png');
-$iconWhiteSpritePath: image-path('glyphicons-halflings-white.png');
-
-$navbarBackground: #555;
-$navbarBackgroundHighlight: #888;
-$navbarText: #eee;
-$navbarLinkColor: #eee;
 
 @import "bootstrap";
 
 body { padding-top: 60px; }
 
 @import "bootstrap-responsive";
+
 
 h1 {
   margin: 20px 0;
@@ -78,6 +71,25 @@ img.gravatar {
 
 .sidebar {
   margin-left: 100px;
+}
+
+
+/* Users list */
+
+ul.users-list {
+  margin: 0;
+  padding: 0;
+}
+
+ul.users-list li {
+  display: block;
+  margin: 20px 0;
+  font-size: 1.2em;
+}
+
+ul.users-list li img {
+  margin-right: 30px;
+  vertical-align: middle;
 }
 
 

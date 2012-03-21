@@ -3,4 +3,6 @@
     <%= render partial: 'shared/feed_item', collection: @feed_items %>
   </div>
   <%= paginate @feed_items %>
+<% else %>
+  <p>Your feed stream is empty. Start following users or post your own feeds!</p>
 <% end %>

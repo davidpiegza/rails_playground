@@ -13,6 +13,7 @@ gem 'faker'
 gem 'kaminari'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
+gem 'newrelic_rpm'
 gem 'thin'
 
 group :development do

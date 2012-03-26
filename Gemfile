@@ -11,6 +11,8 @@ gem 'launchy'
 gem 'heroku'
 gem 'faker'
 gem 'kaminari'
+gem 'delayed_job'
+gem 'delayed_job_active_record'
 gem 'thin'
 
 group :development do

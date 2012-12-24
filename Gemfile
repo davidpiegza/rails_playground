@@ -35,7 +35,6 @@ group :assets do
 end
 
 group :test do
-  gem 'cucumber-rails'
   gem 'capybara', '1.1.2'
   gem 'factory_girl_rails'
   gem 'rb-fsevent', '0.4.3.1', :require => false

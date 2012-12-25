@@ -27,9 +27,9 @@ after_success:
     heroku keys:clear;
     yes | heroku keys:add;
     yes | git push heroku master;
-    yes | heroku maintenance:on
-    yes | heroku run rake db:migrate
-    yes | heroku maintenance:off
+    heroku maintenance:on;
+    heroku run rake db:migrate;
+    heroku maintenance:off;
     fi
   - if [[ "$TRAVIS_BRANCH" == "staging" ]]; then
     echo "Staging - not deploying to heroku...";

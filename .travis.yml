@@ -29,4 +29,5 @@ after_script:
     yes | git push heroku master;
     fi
   - if [[ "$TRAVIS_BRANCH" == "staging" ]]; then
-    echo "Staging - not deploying to heroku..."
+    echo "Staging - not deploying to heroku...";
+    fi

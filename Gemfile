@@ -13,7 +13,7 @@ gem 'faker'
 gem 'kaminari'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
-gem 'newrelic_rpm'
+# gem 'newrelic_rpm'
 gem 'thin'
 
 group :development do
@@ -22,7 +22,7 @@ end
 
 group :development, :test do
   gem 'sqlite3', '1.3.5'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '2.11.0'
 end
 
 # Gems used only for assets and not required
@@ -37,13 +37,13 @@ end
 group :test do
   gem 'capybara', '1.1.2'
   gem 'factory_girl_rails'
-  gem 'rb-fsevent', '0.4.3.1', :require => false
-  gem 'guard-spork', '0.3.2'
-  gem 'spork', '0.9.0'
+  gem 'rb-fsevent', :require => false
+  gem 'guard-spork'
+  gem 'spork'
 end
 
 group :production do
-  gem 'pg', '0.12.2'
+  gem 'pg', '~> 0.14.1'
 end
 
 # To use ActiveModel has_secure_password

@@ -44,7 +44,7 @@ describe "Authentication" do
   describe "authorization" do
 
     describe "for non-signed-in users" do
-      let(:user) { Factory(:user) }
+      let(:user) { FactoryGirl.create(:user) }
 
       describe "in the Users controller" do
         describe "visiting the edit page" do

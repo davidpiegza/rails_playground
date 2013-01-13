@@ -7,6 +7,8 @@ class SessionsController < ApplicationController
     user = User.find_by_email params[:session][:email]
     if user && user.authenticate(params[:session][:password])
       sign_in user
+      puts "Signed in user"
+      p user.email
       NotifyMailer.notify.deliver
       redirect_back_or user
     else

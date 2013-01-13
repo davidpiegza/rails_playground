@@ -125,7 +125,7 @@ describe "User pages" do
       before { click_button 'Update' }
 
       # it { should have_content(error) }
-      it { should have_selector('div#error_explanation') }
+      it { should have_selector('div.alert-error') }
 
     end
 
@@ -142,7 +142,7 @@ describe "User pages" do
       end
 
       it { should have_selector('title', text: new_name) }
-      it { should have_selector('div.flash.success') }
+      it { should have_selector('div.alert-success') }
       it { should have_link('Sign out', href: signout_path) }
       specify { user.reload.name.should == new_name }
       specify { user.reload.email.should == new_email }

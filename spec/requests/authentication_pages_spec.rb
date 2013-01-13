@@ -14,7 +14,7 @@ describe "Authentication" do
       before { click_button 'Sign in' }
 
       it { should have_selector('title', text: 'Sign in') }
-      it { should have_selector('div.flash.error', text: 'Invalid') }
+      it { should have_selector('div.alert-error', text: 'Invalid') }
 
       describe "after visiting another page" do
         before { click_link 'Home' }
@@ -103,7 +103,7 @@ describe "Authentication" do
 
       describe "in the Microposts controller" do
         describe "submitting to the create action" do
-          before { post micropost_path }
+          before { post microposts_path }
           specify { response.should redirect_to(signin_path) }
         end
 

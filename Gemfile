@@ -1,9 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.2'
-
-# Bundle edge Rails instead:
-# gem 'rails',     :git => 'git://github.com/rails/rails.git'
+gem 'rails', '3.2.11'
 
 gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'jquery-rails'
@@ -13,7 +10,6 @@ gem 'faker'
 gem 'kaminari'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
-gem 'newrelic_rpm'
 gem 'thin'
 
 group :development do
@@ -21,7 +17,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'sqlite3', '1.3.5'
+  gem 'sqlite3'
   gem 'rspec-rails'
 end
 
@@ -30,32 +26,16 @@ end
 group :assets do
   gem 'coffee-rails'
   gem 'uglifier'
-  gem 'sass-rails', '~> 3.1'
-  gem 'bootstrap-sass', '~> 2.0.1'
+  gem 'sass-rails'
+  gem 'bootstrap-sass'
 end
 
 group :test do
-  gem 'cucumber-rails'
-  gem 'capybara', '1.1.2'
+  gem 'capybara'
   gem 'factory_girl_rails'
-  gem 'rb-fsevent', '0.4.3.1', :require => false
-  gem 'guard-spork', '0.3.2'
-  gem 'spork', '0.9.0'
+  gem 'spork'
 end
 
 group :production do
-  gem 'pg', '0.12.2'
+  gem 'pg'
 end
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# Use unicorn as the web server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'
-

@@ -1,0 +1,36 @@
+language: ruby
+
+rvm:
+  - 1.9.3
+
+env:
+  global:
+    - secure: "Wc1OpT+bpzmw+cTWwm5WK9pDScwrOV7Q8+9XxyfQu3CwGd4jzAF5WmT2k1o7\nftWbv7/Rt6CtH1oCF7uGm+nxB1y65aOB6BrlsXkdFwuYt2ovMUVV3VtaFg+k\nKo5jrR/aJzR2VPyIfVpyHTvjVGY1grKx2QARERYsKve/7mcPcSM="
+
+bundler_args: --without development
+
+before_install: gem install bundler
+
+before_script:
+  - cp config/database.travis.yml config/database.yml
+  - psql -c 'create database test;' -U postgres
+  - rake db:migrate
+
+after_success:
+  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
+    wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh;
+    git remote add heroku git@heroku.com:railspg.git;
+    echo "Host heroku.com" >> ~/.ssh/config;
+    echo "   StrictHostKeyChecking no" >> ~/.ssh/config;
+    echo "   CheckHostIP no" >> ~/.ssh/config;
+    echo "   UserKnownHostsFile=/dev/null" >> ~/.ssh/config;
+    heroku keys:clear;
+    yes | heroku keys:add;
+    yes | git push heroku master;
+    heroku maintenance:on;
+    heroku run rake db:migrate;
+    heroku maintenance:off;
+    fi
+  - if [[ "$TRAVIS_BRANCH" == "staging" ]]; then
+    echo "Staging - not deploying to heroku...";
+    fi
